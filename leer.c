@@ -5,29 +5,33 @@
  * read_file: Lectura de un archivo
  * Entrada:
  *      - file_name: Nombre de entrada del archivo
+ *      - array: valor por referencia donde quedaran los elementos del archivo
  *      - size: Cantidad de elementos dentro del archivo
  * Salida: arreglo de float con valores del archivo.
 */
-void read_file(char *file_name, float* values, int size)
+void read_file(char *file_name, float *array, int size)
 {
     FILE *input_file = fopen(file_name, "rb"); // Abrir archivo
-    float buffer; // Buffer de lectura
+    float buffer;                              // Buffer de lectura
     for (int i = 0; i < size; i++)
     {
         fread(&buffer, sizeof(float), 1, input_file); // Leer un valor desde el archivo
-        values[i] = buffer; // Agregar el valor en el arreglo
+        array[i] = buffer;                            // Agregar el valor en el arreglo
     }
     fclose(input_file); //Cerrar archivo
 }
+
 /**
- * print_fa: 
+ * print_float_array: Imprime un arreglo de floats
  * Entrada:
  *      - values: arreglo de floats 
  *      - size: largo del arreglo
 */
-void print_values(float* values, int size){
-    for (int i=0;i<size;i++){
-        printf("%f\n", values[i]);
+void print_float_array(float *array, int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        printf("%f\n", array[i]);
     }
 }
 int main()
@@ -38,7 +42,7 @@ int main()
     int d = 0;
     float *values = (float *)malloc(sizeof(float) * size); // Reservar memoria para arreglo de valores
     read_file(input_file_name, values, size);
-    print_values(values,size);
+    print_float_array(values, size);
     free(values);
     return 1;
 }
