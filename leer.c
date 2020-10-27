@@ -50,9 +50,8 @@ int main()
     int d = 0;
     float *values = (float *)malloc(sizeof(float) * size); // Reservar memoria para arreglo de valores
 
-    // Se cargan los valores desde el archivo de entrada
+    // LEER ARCHIVO
     read_file(input_file_name, values, size);
-    //print_float_array(values, size);
 
     //Arreglos de entrada
     /*float A1[4] __attribute__((aligned(16))) = {values[0], values[1], values[2], values[3]};
@@ -60,28 +59,19 @@ int main()
     float A3[4] __attribute__((aligned(16))) = {values[8], values[9], values[10], values[11]};
     float A4[4] __attribute__((aligned(16))) = {values[12], values[13], values[14], values[15]};*/
 
+    //ARREGLOS DE ENTRADA Y SALIDA
     float A1[4] __attribute__((aligned(16))) = {12.0, 21.0, 4.0, 13.0};
     float A2[4] __attribute__((aligned(16))) = {9.0, 8.0, 6.0, 7.0};
     float A3[4] __attribute__((aligned(16))) = {1.0, 14.0, 3.0, 0.0};
     float A4[4] __attribute__((aligned(16))) = {5.0, 11.0, 15.0, 10.0};
 
-    // Arreglos de salida
-    float B1[4] __attribute__((aligned(32))) = {0.0, 0.0, 0.0, 0.0};
-    float B2[4] __attribute__((aligned(32))) = {0.0, 0.0, 0.0, 0.0};
-    float B3[4] __attribute__((aligned(32))) = {0.0, 0.0, 0.0, 0.0};
-    float B4[4] __attribute__((aligned(32))) = {0.0, 0.0, 0.0, 0.0};
-
-    //Registros necesarios
+    //REGISTROS DE ENTRADA Y SALIDA
     __m128 r1, r2, r3, r4;
 
-    //primer paso
-    __m128 p11, p12, p13, p14;
-    //segundo paso
-    __m128 p22, p23;
-    //tercer paso
-    __m128 p32, p33;
+    //REGISTROS TEMPORALES
+    __m128 p11, p12, p13, p14, p22, p23;
 
-    //Se cargan los registros
+    //CARGAR REGISTROS
     r1 = _mm_load_ps(A1);
     r2 = _mm_load_ps(A2);
     r3 = _mm_load_ps(A3);
@@ -100,18 +90,20 @@ int main()
     r4 = _mm_max_ps(p13, p14); //FINAL
 
     //TERCER PASO
-    r2 = _mm_min_ps(p22, p33); //FINAL
+    r2 = _mm_min_ps(p22, p23); //FINAL
     r3 = _mm_max_ps(p22, p23); //FINAL
 
+    //TRASPONER LA MATRIZ 
     _MM_TRANSPOSE4_PS(r1, r2, r3, r4);
 
-    _mm_store_ps(B1, r1);
-    _mm_store_ps(B2, r2);
-    _mm_store_ps(B3, r3);
-    _mm_store_ps(B4, r4);
+    //GUARDAR REGISTROS
+    _mm_store_ps(A1, r1);
+    _mm_store_ps(A2, r2);
+    _mm_store_ps(A3, r3);
+    _mm_store_ps(A4, r4);
 
     printf("traspuesta\n");
-    print_matrix_16(B1, B2, B3, B4);
+    print_matrix_16(A1, A2, A3, A4);
 
     free(values);
     return 1;
