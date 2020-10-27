@@ -13,7 +13,6 @@
 void read_file(char *file_name, float *array, int size)
 {
     FILE *input_file = fopen(file_name, "rb"); // Abrir archivo
-    float buffer;                              // Buffer de lectura
     fread(array, sizeof(float), size, input_file);
     fclose(input_file); //Cerrar archivo
 }
