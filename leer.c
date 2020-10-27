@@ -27,7 +27,19 @@ void read_file(char *file_name, float *array, int size)
 void print_float_array(float *array, int size)
 {
     for (int i = 0; i < size; i++)
-        printf("%f\n", array[i]);
+        printf("%f ", array[i]);
+}
+
+void print_matrix_16(float *arg1, float *arg2, float *arg3, float *arg4)
+{
+    print_float_array(arg1, 4);
+    printf("\n");
+    print_float_array(arg2, 4);
+    printf("\n");
+    print_float_array(arg3, 4);
+    printf("\n");
+    print_float_array(arg4, 4);
+    printf("\n");
 }
 
 int main()
@@ -37,19 +49,69 @@ int main()
     int size = 64;
     int d = 0;
     float *values = (float *)malloc(sizeof(float) * size); // Reservar memoria para arreglo de valores
-    read_file(input_file_name, values, size);
-    print_float_array(values, size);
 
-    float A[4] __attribute__((aligned(16))) = {values[0], values[1], values[2], values[3]};
-    float B[4] __attribute__((aligned(16))) = {values[4], values[5], values[6], values[7]};
-    float C[4] __attribute__((aligned(16))) = {values[8], values[9], values[10], values[11]};
-    float D[4] __attribute__((aligned(16))) = {values[12], values[13], values[14], values[15]};
+    // Se cargan los valores desde el archivo de entrada
+    read_file(input_file_name, values, size);
+    //print_float_array(values, size);
+
+    //Arreglos de entrada
+    /*float A1[4] __attribute__((aligned(16))) = {values[0], values[1], values[2], values[3]};
+    float A2[4] __attribute__((aligned(16))) = {values[4], values[5], values[6], values[7]};
+    float A3[4] __attribute__((aligned(16))) = {values[8], values[9], values[10], values[11]};
+    float A4[4] __attribute__((aligned(16))) = {values[12], values[13], values[14], values[15]};*/
+
+    float A1[4] __attribute__((aligned(16))) = {12.0, 21.0, 4.0, 13.0};
+    float A2[4] __attribute__((aligned(16))) = {9.0, 8.0, 6.0, 7.0};
+    float A3[4] __attribute__((aligned(16))) = {1.0, 14.0, 3.0, 0.0};
+    float A4[4] __attribute__((aligned(16))) = {5.0, 11.0, 15.0, 10.0};
+
+    // Arreglos de salida
+    float B1[4] __attribute__((aligned(32))) = {0.0, 0.0, 0.0, 0.0};
+    float B2[4] __attribute__((aligned(32))) = {0.0, 0.0, 0.0, 0.0};
+    float B3[4] __attribute__((aligned(32))) = {0.0, 0.0, 0.0, 0.0};
+    float B4[4] __attribute__((aligned(32))) = {0.0, 0.0, 0.0, 0.0};
+
+    //Registros necesarios
     __m128 r1, r2, r3, r4;
 
-    r1 = _mm_load_ps(A);
-    r2 = _mm_load_ps(B);
-    r3 = _mm_load_ps(C);
-    r4 = _mm_load_ps(D);
+    //primer paso
+    __m128 p11, p12, p13, p14;
+    //segundo paso
+    __m128 p21, p22, p23, p24;
+    //tercer paso
+    __m128 p31, p32, p33, p34;
+
+    //Se cargan los registros
+    r1 = _mm_load_ps(A1);
+    r2 = _mm_load_ps(A2);
+    r3 = _mm_load_ps(A3);
+    r4 = _mm_load_ps(A4);
+
+    //PRIMERO PASO
+    p11 = _mm_min_ps(r1, r3);
+    p12 = _mm_min_ps(r2, r4);
+    p13 = _mm_max_ps(r1, r3);
+    p14 = _mm_max_ps(r2, r4);
+
+    //SEGUNDO PASO
+    p21 = _mm_min_ps(p11, p12); //FINAL
+    p22 = _mm_max_ps(p11, p12);
+    p23 = _mm_min_ps(p13, p14);
+    p24 = _mm_max_ps(p13, p14); //FINAL
+
+    //TERCER PASO
+    p32 = _mm_min_ps(p22, p33); //FINAL
+    p33 = _mm_max_ps(p22, p23); //FINAL
+
+    _MM_TRANSPOSE4_PS(p21, p32, p33, p24);
+
+    _mm_store_ps(B1, p21);
+    _mm_store_ps(B2, p32);
+    _mm_store_ps(B3, p33);
+    _mm_store_ps(B4, p24);
+
+    printf("traspuesta\n");
+    print_matrix_16(B1, B2, B3, B4);
 
     free(values);
     return 1;
