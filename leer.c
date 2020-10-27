@@ -11,7 +11,6 @@
 void read_file(char *file_name, float* values, int size)
 {
     FILE *input_file = fopen(file_name, "rb"); // Abrir archivo
-    
     float buffer; // Buffer de lectura
     for (int i = 0; i < size; i++)
     {
