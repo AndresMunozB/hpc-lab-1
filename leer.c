@@ -77,9 +77,9 @@ int main()
     //primer paso
     __m128 p11, p12, p13, p14;
     //segundo paso
-    __m128 p21, p22, p23, p24;
+    __m128 p22, p23;
     //tercer paso
-    __m128 p31, p32, p33, p34;
+    __m128 p32, p33;
 
     //Se cargan los registros
     r1 = _mm_load_ps(A1);
@@ -94,21 +94,21 @@ int main()
     p14 = _mm_max_ps(r2, r4);
 
     //SEGUNDO PASO
-    p21 = _mm_min_ps(p11, p12); //FINAL
+    r1 = _mm_min_ps(p11, p12); //FINAL
     p22 = _mm_max_ps(p11, p12);
     p23 = _mm_min_ps(p13, p14);
-    p24 = _mm_max_ps(p13, p14); //FINAL
+    r4 = _mm_max_ps(p13, p14); //FINAL
 
     //TERCER PASO
-    p32 = _mm_min_ps(p22, p33); //FINAL
-    p33 = _mm_max_ps(p22, p23); //FINAL
+    r2 = _mm_min_ps(p22, p33); //FINAL
+    r3 = _mm_max_ps(p22, p23); //FINAL
 
-    _MM_TRANSPOSE4_PS(p21, p32, p33, p24);
+    _MM_TRANSPOSE4_PS(r1, r2, r3, r4);
 
-    _mm_store_ps(B1, p21);
-    _mm_store_ps(B2, p32);
-    _mm_store_ps(B3, p33);
-    _mm_store_ps(B4, p24);
+    _mm_store_ps(B1, r1);
+    _mm_store_ps(B2, r2);
+    _mm_store_ps(B3, r3);
+    _mm_store_ps(B4, r4);
 
     printf("traspuesta\n");
     print_matrix_16(B1, B2, B3, B4);
