@@ -41,6 +41,20 @@ void print_matrix_16(float *arg1, float *arg2, float *arg3, float *arg4)
     printf("\n");
 }
 
+void BMN(__m128 *r1, __m128 *r2){
+    __m128 t1,t2,t3,t4;
+
+    t1 = _mm_shuffle_ps(*r1, *r1, _MM_SHUFFLE(3,1,2,0));
+    t2 = _mm_shuffle_ps(*r2, *r2, _MM_SHUFFLE(0,2,1,3));
+
+    t3 = _mm_min_ps(t1, t2);
+    t4 = _mm_max_ps(t1, t2);
+
+
+
+
+}
+
 int main()
 {
     char *input_file_name = "data/64floats.raw";
