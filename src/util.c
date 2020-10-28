@@ -97,7 +97,7 @@ int main()
     r3 = _mm_load_ps(A3);
     r4 = _mm_load_ps(A4);
 
-    //sort_in_register(&r1,&r2,&r3,&r4);
+    sort_in_register(&r1,&r2,&r3,&r4);
 
     //GUARDAR REGISTROS
     _mm_store_ps(A1, r1);
