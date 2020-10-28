@@ -26,46 +26,62 @@ int main()
     //ARREGLOS DE ENTRADA Y SALIDA
     float A1[4] __attribute__((aligned(16))) = {5.0, 6.0, 7.0, 8.0};
     float A2[4] __attribute__((aligned(16))) = {1.0, 2.0, 3.0, 4.0};
-    
+
+    print_float_array(A1,4);
+    printf("\n");
+    print_float_array(A2,4);
+    printf("\n\n");
+
     
 
     //REGISTROS DE ENTRADA Y SALIDA
-    __m128 r1, r2, r3, r4;
+    __m128 r1, r2;
 
     //REGISTROS TEMPORALES
-    __m128 t1,t2,t3,t4,t5,t6;
+    __m128 t1,t2;
 
     //CARGAR REGISTROS
     r1 = _mm_load_ps(A1);
     r2 = _mm_load_ps(A2);
 
     
+    /* PRIMER PASO */
+    r1 = _mm_shuffle_ps(r1, r1, _MM_SHUFFLE(3,1,2,0)); // INVERTIR AL MEDIO
+    r2 = _mm_shuffle_ps(r2, r2, _MM_SHUFFLE(0,2,1,3)); // INVERTIR LOS EXTREMOS
 
-    t1 = _mm_shuffle_ps(r1, r1, _MM_SHUFFLE(3,1,2,0));
-    t2 = _mm_shuffle_ps(r2, r2, _MM_SHUFFLE(0,2,1,3));
+    t1 = _mm_max_ps(r1, r2); 
+    t2 = _mm_min_ps(r1, r2);
 
-    t3 = _mm_max_ps(t1, t2);
-    t4 = _mm_min_ps(t1, t2);
+    /* SEGUNDO PASO*/
+    r1 = _mm_shuffle_ps(t1, t2, _MM_SHUFFLE(2,0,2,0)); 
+    r2 = _mm_shuffle_ps(t1, t2, _MM_SHUFFLE(3,1,3,1));
+    r1 = _mm_shuffle_ps(r1, r1, _MM_SHUFFLE(3,1,2,0)); // INVERTIR AL MEDIO
+    r2 = _mm_shuffle_ps(r2, r2, _MM_SHUFFLE(3,1,2,0)); // INVERTIR AL MEDIO
 
-    t3 = _mm_shuffle_ps(t3, t3, _MM_SHUFFLE(3,1,2,0));
-    t6 = _mm_shuffle_ps(r2, r2, _MM_SHUFFLE(0,2,1,3));
+    t1 = _mm_max_ps(r1, r2);
+    t2 = _mm_min_ps(r1, r2);
+    
+    /* TERCER PASO*/
+    r1 = _mm_shuffle_ps(t1, t2, _MM_SHUFFLE(1,0,1,0)); 
+    r2 = _mm_shuffle_ps(t1, t2, _MM_SHUFFLE(3,2,3,2));
+    r1 = _mm_shuffle_ps(r1, r1, _MM_SHUFFLE(3,1,2,0)); // INVERTIR AL MEDIO
+    r2 = _mm_shuffle_ps(r2, r2, _MM_SHUFFLE(3,1,2,0)); // INVERTIR AL MEDIO
 
-    t3 = _mm_max_ps(t1, t2);
-    t4 = _mm_min_ps(t1, t2);
+    t1 = _mm_max_ps(r1, r2);
+    t2 = _mm_min_ps(r1, r2);
+
+    /* FINAL */
+    r1 = _mm_shuffle_ps(t1, t2, _MM_SHUFFLE(1,0,1,0)); 
+    r2 = _mm_shuffle_ps(t1, t2, _MM_SHUFFLE(3,2,3,2));
+    r1 = _mm_shuffle_ps(r1, r1, _MM_SHUFFLE(3,1,2,0)); // INVERTIR AL MEDIO
+    r2 = _mm_shuffle_ps(r2, r2, _MM_SHUFFLE(3,1,2,0)); // INVERTIR AL MEDIO
 
     //GUARDAR REGISTROS
-    _mm_store_ps(A1, t3);
-    _mm_store_ps(A2, t4);
+    _mm_store_ps(A1, r1);
+    _mm_store_ps(A2, r2);
 
-    t5[0] = t3[0] 
-    t5[1] = t4[0]
-    t5[2] = t3[2]
-    t5[3] = t4[2]
-
-    t6[0] = t3[0] 
-    t6[1] = t4[0]
-    t6[2] = t3[2]
-    t6[3] = t4[2]
+    
+    
 
     print_float_array(A1,4);
     printf("\n");
