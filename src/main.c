@@ -1,24 +1,24 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <ctype.h>
-#include "getoptFunction.h"
-#include "functions.h"
-#include "utils.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <ctype.h>
+# include "getoptFunction.h"
+# include "functions.h"
+# include "utils.h"
 
 int main(int argc, char *argv[])
 {
     int NValue = 0;
     int dValue = 0;
-    char *iValue = NULL;
-    char *oValue = NULL;
-    getoptFunction(argc, argv, &iValue, &oValue, &NValue, &dValue);
+    char* iValue = NULL;
+    char* oValue = NULL;
+    getoptFunction(argc,argv,&iValue,&oValue,&NValue,&dValue);
     //printf("%s\n",iValue);
     //printf("%s\n",oValue);
     //printf("%d\n",NValue);
     //printf("%d\n",dValue);
 
-    char *input_file_name = "../data/64floats.raw";
+    char *input_file_name = "./data/64floats.raw";
     char *output_file_name = "output.raw";
     int size = 64;
     int d = 0;
@@ -48,8 +48,8 @@ int main(int argc, char *argv[])
     r3 = _mm_load_ps(A3);
     r4 = _mm_load_ps(A4);
 
-    // **IMPORTANT** PRUEBAS DE SOR IN REGISTER
-    sort_in_register(&r1, &r2, &r3, &r4);
+    // **IMPORTANT** PRUEBAS DE SOR IN REGISTER 
+    sort_in_register(&r1,&r2,&r3,&r4);
 
     //GUARDAR REGISTROS
     _mm_store_ps(A1, r1);
@@ -61,15 +61,15 @@ int main(int argc, char *argv[])
     print_matrix_16(A1, A2, A3, A4);
 
     // **IMPORNTANT** PRUEBAS DE BMN NETWORK
-    bmn_network(&r1, &r2);
+    bmn_network(&r1,&r2);
 
     //GUARDAR REGISTROS
     _mm_store_ps(A1, r1);
     _mm_store_ps(A2, r2);
 
-    print_float_array(A1, 4);
+    print_float_array(A1,4);
     printf("\n");
-    print_float_array(A2, 4);
+    print_float_array(A2,4);
     printf("\n");
 
     free(values);
