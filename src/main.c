@@ -22,6 +22,8 @@ int main(int argc, char *argv[])
     char *output_file_name = "output.raw";
     int size = 64;
     int d = 0;
+    printf("%d\n",d);
+    printf("%s\n",output_file_name);
     float *values = (float *)malloc(sizeof(float) * size); // Reservar memoria para arreglo de valores
 
     // LEER ARCHIVO
