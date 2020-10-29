@@ -4,20 +4,19 @@
 typedef struct Lista
 {
 	int len;
-	int* elements;
+	float* elements;
 }Lista;
 
 
-Lista* agregarNodo(Lista* list , int* aux)
-{
+Lista* agregarNodo(Lista* list , float* aux){
     if(list->len == 0)
     {
-    	list->elements = (int*)malloc(sizeof(int));
+    	list->elements = (float*)malloc(sizeof(float));
     	list->elements[0] = *aux;
     }
     else
     {
-        list->elements = (int*)realloc(list->elements, (list->len + 1) * sizeof (int)); // Pedimos mas memoria para el arreglo creado
+        list->elements = (float*)realloc(list->elements, (list->len + 1) * sizeof (float)); // Pedimos mas memoria para el arreglo creado
         list->elements[list->len] = *aux; // Agregamos el nodo que se desea agregar, luego de haber solicitado memoria
     }
     list->len++; // aumnetamos el largo de la lista de arreglos
@@ -29,17 +28,21 @@ void mostrarLista(Lista* lista)
 	int j;
 	for (j = 0; j < lista->len; j++)
     {
-    	printf("El elemento es: %d \n", lista->elements[j]);
+    	printf("El elemento es: %f \n", lista->elements[j]);
     }
 }
 
-int lenList(int* list){
-	int longitud = sizeof(list) / sizeof(list[0]);
+int lenList(float* list){
+	printf("Elemento 1: %f\n", list[0]);
+	printf("Elemento 2: %f\n", list[1]);
+	printf("Elemento 3: %f\n", list[2]);
+	printf("Elemento 4: %f\n", list[3]);
+	int longitud = sizeof(list) / sizeof(float) ;
 	return longitud;
 }
 
-int* cutList(int* aux){
-	int* newList = (int*)malloc(sizeof(int));
+float* cutList(float* aux){
+	float* newList = (float*)malloc(sizeof(float));
 	int i;
 	for (i = 1; i < lenList(aux); i++)
 	{
@@ -53,19 +56,16 @@ int main(int argc, char const *argv[])
 	Lista* finalList = (Lista*)malloc(sizeof(Lista));
 	Lista* auxList = (Lista*)malloc(sizeof(Lista));
 
-	int* aux = (int*)malloc(sizeof(int));
 	for (int i = 0; i < 16; i++)
-	{
-		aux[0] = 0;
-		aux[1] = 1;
-		aux[2] = 2;
-		aux[3] = 3;
+	{	
+		float* aux = (float*)malloc(sizeof(float));
+		aux[0] = (float)0.111;
+		aux[1] = (float)0.112;
+		aux[2] = (float)0.113;
 		agregarNodo(auxList,aux);
+		free(aux);
 	}
-
-	printf("%d\n",cutList(aux) );
-	int* aux1 = (int*)malloc(sizeof(int));
-	printf("%d\n",cutList(aux1) );
+	printf("%f\n", cutList(auxList[0].elements)[0]);
 
 	printf("Largo de lista: %d\n", auxList->len);
 
