@@ -1,12 +1,9 @@
 INC_DIRS = -Iinclude
 CFLAGS = -Wall -c
 
-compilation: obj/getoptFunction.o obj/functions.o obj/utils.o obj/main.o
+compilation: obj/functions.o obj/utils.o obj/main.o
 	@ gcc obj/*.o -o bin/output
-	@ echo "Compilation."
-
-obj/getoptFunction.o: src/getoptFunction.c
-	@ gcc $(CFLAGS) $(INC_DIRS) src/getoptFunction.c -o obj/getoptFunction.o
+	@ echo "Compilation success."
 
 obj/functions.o: src/functions.c
 	@ gcc $(CFLAGS) $(INC_DIRS) src/functions.c -o obj/functions.o
