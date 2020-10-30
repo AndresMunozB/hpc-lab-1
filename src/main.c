@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
     int d = 0;
     printf("%d\n",d);
     printf("%s\n",output_file_name);
+    //float *values = (float *)aligned_alloc(16, sizeof(float) * size); // Reservar memoria para arreglo de valores
     float *values = (float *)malloc(sizeof(float) * size); // Reservar memoria para arreglo de valores
 
     // LEER ARCHIVO
@@ -42,6 +43,10 @@ int main(int argc, char *argv[])
     __m128 r1, r2, r3, r4;
 
     //CARGAR REGISTROS
+    /*r1 = _mm_load_ps(values+0);
+    r2 = _mm_load_ps(values+4);
+    r3 = _mm_load_ps(values+8);
+    r4 = _mm_load_ps(values+12);*/
     r1 = _mm_load_ps(A1);
     r2 = _mm_load_ps(A2);
     r3 = _mm_load_ps(A3);
