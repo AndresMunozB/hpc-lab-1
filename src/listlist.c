@@ -53,13 +53,11 @@ void ll_delete(ListList *listlist, int index)
     else
     {
         list_free(&listlist->data[index]);
-        /* Copy next element value to current element */
         for (int i = index; i < listlist->len - 1; i++)
         {
             listlist->data[i] = listlist->data[i + 1];
         }
 
-        /* Decrement array size by 1 */
         listlist->data = (List *)realloc(listlist->data, (listlist->len - 1) * sizeof(List));
         listlist->len--;
     }
