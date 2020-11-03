@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     write_file(oValue, l2->data, l2->len);
 
 
-    // Liberar la memoria
+    // LIBERAR MEMORIA
     ll_free(ll);
     list_free(l2);
     free(values);
