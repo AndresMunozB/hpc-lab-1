@@ -1,3 +1,4 @@
 *.out
+*.raw
 bin/*.out
 obj/*.o

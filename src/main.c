@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
     ll_merge(ll,l2);
     //list_print(l2);
     write_file(oValue, l2->data, l2->len);
+    printf("%d\n", l2->len);
 
 
     // LIBERAR MEMORIA

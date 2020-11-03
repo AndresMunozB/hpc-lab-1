@@ -17,7 +17,7 @@ void read_file(char *file_name, float *array, int size)
 void write_file(char *file_name, float *array, int size)
 {
     FILE *output_file = fopen(file_name, "wb"); // Abrir archivo
-    fread(array, sizeof(float), size, output_file);
+    fwrite(array, sizeof(float), size, output_file);
     fclose(output_file); //Cerrar archivo
 }
 
