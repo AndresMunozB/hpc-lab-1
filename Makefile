@@ -22,6 +22,6 @@ clean:
 
 run:
 	@ echo "Running...\n"
-	@ ./bin/main.out -i 1 -o 2 -N 256 -d 1
+	@ ./bin/main.out -i ./data/65536floats.raw -o output.raw -N 65536 -d 0
 
 start: clean compilation run
