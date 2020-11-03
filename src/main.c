@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     read_file(iValue, list->data, list->len); // LEER ARCHIVO
     t = clock();
     //print_float_array(list->data,list->len);
-    simd_sort(list, list_sorted); //ORDENAR LOS VALORES
+    simd_sort(list, list_sorted, dValue); //ORDENAR LOS VALORES
     t = clock() - t;
     time_taken = ((double)t) / CLOCKS_PER_SEC; // in seconds
     printf("simd_sort() took %f seconds to execute \n", time_taken);
