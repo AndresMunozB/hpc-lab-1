@@ -2,7 +2,7 @@ INC_DIRS = -Iinclude
 CFLAGS = -Wall -c
 
 compilation: obj/functions.o obj/utils.o obj/main.o
-	@ gcc obj/*.o -o bin/output
+	@ gcc obj/*.o -o bin/main.out
 	@ echo "Compilation success."
 
 obj/functions.o: src/functions.c

@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 
     // LEER ARCHIVO
     read_file(input_file_name, values, size);
-
+    //print_float_array(values,size);
     //Arreglos de entrada
     /*float A1[4] __attribute__((aligned(16))) = {values[0], values[1], values[2], values[3]};
     float A2[4] __attribute__((aligned(16))) = {values[4], values[5], values[6], values[7]};
@@ -39,8 +39,11 @@ int main(int argc, char *argv[])
     float A3[4] __attribute__((aligned(16))) = {1.0, 14.0, 3.0, 0.0};
     float A4[4] __attribute__((aligned(16))) = {5.0, 11.0, 15.0, 10.0};
 
+
     //REGISTROS DE ENTRADA Y SALIDA
     __m128 r1, r2, r3, r4;
+
+
 
     //CARGAR REGISTROS
     /*r1 = _mm_load_ps(values+0);
@@ -55,26 +58,46 @@ int main(int argc, char *argv[])
     // **IMPORTANT** PRUEBAS DE SOR IN REGISTER 
     sort_in_register(&r1,&r2,&r3,&r4);
 
+
     //GUARDAR REGISTROS
     _mm_store_ps(A1, r1);
     _mm_store_ps(A2, r2);
     _mm_store_ps(A3, r3);
     _mm_store_ps(A4, r4);
 
-    printf("traspuesta\n");
+    printf("1 paso\n");
     print_matrix_16(A1, A2, A3, A4);
 
+    //printf("traspuesta\n");
+
     // **IMPORNTANT** PRUEBAS DE BMN NETWORK
+    
     bmn_network(&r1,&r2);
+    bmn_network(&r3,&r4);
 
     //GUARDAR REGISTROS
     _mm_store_ps(A1, r1);
     _mm_store_ps(A2, r2);
+    _mm_store_ps(A3, r3);
+    _mm_store_ps(A4, r4);
 
-    print_float_array(A1,4);
-    printf("\n");
-    print_float_array(A2,4);
-    printf("\n");
+    printf("2 paso\n");
+    print_matrix_16(A1, A2, A3, A4);
+
+    merge_simd(&r1,&r2,&r3,&r4);
+
+    //GUARDAR REGISTROS
+    _mm_store_ps(A1, r1);
+    _mm_store_ps(A2, r2);
+    _mm_store_ps(A3, r3);
+    _mm_store_ps(A4, r4);
+
+    printf("3 paso\n");
+    print_matrix_16(A1, A2, A3, A4);
+    ///print_float_array(A1,4);
+    //printf("\n");
+    //print_float_array(A2,4);
+    //printf("\n");
 
     free(values);
     return 0;
