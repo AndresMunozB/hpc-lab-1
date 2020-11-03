@@ -27,7 +27,11 @@ clean:
 	@ echo "Clean success"
 
 run:
-	@ echo "Running...\n"
+	@ echo "Running..."
 	@ ./bin/main.out -i ./data/65536floats.raw -o output.raw -N 65536 -d 0
 
 start: clean compilation run
+
+
+# gcc -o bubblesort.out listlist.c list.c functions.c utils.c bubblesort.c
+#./bubblesort.out -i ../data/65536floats.raw -o salida.out -N 65536 -d 1
