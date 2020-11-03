@@ -43,9 +43,13 @@ int main(int argc, char *argv[])
     }
 
     ll_merge(ll,l2);
-    list_print(l2);
-    ll_free(ll);
+    //list_print(l2);
+    write_file(oValue, l2->data, l2->len);
 
+
+    // Liberar la memoria
+    ll_free(ll);
+    list_free(l2);
     free(values);
     return 0;
 }

@@ -14,6 +14,12 @@ void read_file(char *file_name, float *array, int size)
     fread(array, sizeof(float), size, input_file);
     fclose(input_file); //Cerrar archivo
 }
+void write_file(char *file_name, float *array, int size)
+{
+    FILE *output_file = fopen(file_name, "wb"); // Abrir archivo
+    fread(array, sizeof(float), size, output_file);
+    fclose(output_file); //Cerrar archivo
+}
 
 /**
  * print_float_array: Imprime un arreglo de floats
