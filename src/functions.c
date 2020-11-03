@@ -56,10 +56,10 @@ void bmn_network(__m128 *r1, __m128 *r2)
     t2 = _mm_min_ps(*r1, *r2);
 
     // FINAL
-    *r1 = _mm_shuffle_ps(t1, t2, _MM_SHUFFLE(1, 0, 1, 0));
-    t1 = _mm_shuffle_ps(t1, t2, _MM_SHUFFLE(3, 2, 3, 2));
-    *r2 = _mm_shuffle_ps(*r1, *r1, _MM_SHUFFLE(0, 2, 1, 3)); // INVERTIR AL MEDIO
-    *r1 = _mm_shuffle_ps(t1, t1, _MM_SHUFFLE(0, 2, 1, 3)); // INVERTIR AL MEDIO
+    *r2 = _mm_shuffle_ps(t1, t2, _MM_SHUFFLE(1, 0, 1, 0));
+    *r1 = _mm_shuffle_ps(t1, t2, _MM_SHUFFLE(3, 2, 3, 2));
+    *r2 = _mm_shuffle_ps(*r2, *r2, _MM_SHUFFLE(0, 2, 1, 3)); // INVERTIR AL MEDIO
+    *r1 = _mm_shuffle_ps(*r1, *r1, _MM_SHUFFLE(0, 2, 1, 3)); // INVERTIR AL MEDIO
 }
 
 void merge_simd(__m128 *r1, __m128 *r2,__m128 *r3, __m128 *r4){
