@@ -128,7 +128,6 @@ void swap_float(float *xp, float *yp)
 
 void bubble_sort(float arr[], int n, int debug)
 {
-
     unsigned long counter = 0l;
     unsigned long nlong = (unsigned long)n;
     unsigned long steps = ((nlong * nlong) - nlong) / 2;
