@@ -7,6 +7,14 @@ List *list_create()
     return list;
 }
 
+List *list_init(int elements)
+{
+    List *list = (List *)malloc(sizeof(List));
+    list->data = (float *)aligned_alloc(16, sizeof(float) * elements);
+    list->len = elements;
+    return list;
+}
+
 void list_print(List *list)
 {
     for (int i = 0; i < list->len; i++)

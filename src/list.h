@@ -12,6 +12,7 @@ typedef struct List
 } List;
 
 List *list_create();
+List *list_init(int elements);
 void list_print(List *list);
 void list_free(List *list);
 void list_append(List *list, float new_element);

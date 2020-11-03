@@ -1,5 +1,12 @@
 #include "functions.h"
-#include <stdio.h>
+
+void swap(__m128 *r1, __m128 *r2)
+{
+    __m128 t1;
+    t1 = _mm_shuffle_ps(*r1, *r1, _MM_SHUFFLE(3, 2, 1, 0));
+    *r1 = _mm_shuffle_ps(*r2, *r2, _MM_SHUFFLE(3, 2, 1, 0));
+    *r2 = _mm_shuffle_ps(t1, t1, _MM_SHUFFLE(3, 2, 1, 0));
+}
 
 void sort_in_register(__m128 *r1, __m128 *r2, __m128 *r3, __m128 *r4)
 {
@@ -56,32 +63,76 @@ void bmn_network(__m128 *r1, __m128 *r2)
     t2 = _mm_min_ps(*r1, *r2);
 
     // FINAL
-    
+
     *r1 = _mm_shuffle_ps(t1, t2, _MM_SHUFFLE(3, 2, 3, 2));
     *r2 = _mm_shuffle_ps(t1, t2, _MM_SHUFFLE(1, 0, 1, 0));
     *r1 = _mm_shuffle_ps(*r1, *r1, _MM_SHUFFLE(0, 2, 1, 3)); // INVERTIR AL MEDIO
     *r2 = _mm_shuffle_ps(*r2, *r2, _MM_SHUFFLE(0, 2, 1, 3)); // INVERTIR AL MEDIO
 }
 
-void merge_simd(__m128 *r1, __m128 *r2,__m128 *r3, __m128 *r4){
-    bmn_network(r1,r3);    
-    
-    if (_mm_comile_ss(*r2,*r4)){ //Si r4[0]>r2[0]
-        bmn_network(r3,r2);
-        bmn_network(r2,r4);
-        swap(r2,r3);
+void merge_simd(__m128 *r1, __m128 *r2, __m128 *r3, __m128 *r4)
+{
+    bmn_network(r1, r3);
+
+    if (_mm_comile_ss(*r2, *r4))
+    { //Si r4[0]>r2[0]
+        bmn_network(r3, r2);
+        bmn_network(r2, r4);
+        swap(r2, r3);
     }
-    else{
-        bmn_network(r3,r4);
-        bmn_network(r4,r2);
-        swap(r3,r2);
-        swap(r3,r4);
+    else
+    {
+        bmn_network(r3, r4);
+        bmn_network(r4, r2);
+        swap(r3, r2);
+        swap(r3, r4);
     }
 }
 
-void swap(__m128 *r1, __m128 *r2){
-    __m128 t1;
-    t1 = _mm_shuffle_ps(*r1, *r1, _MM_SHUFFLE(3, 2, 1, 0));
-    *r1 = _mm_shuffle_ps(*r2, *r2, _MM_SHUFFLE(3, 2, 1, 0));
-    *r2 = _mm_shuffle_ps(t1, t1, _MM_SHUFFLE(3, 2, 1, 0));
+void simd_sort(List *list, List *list_sorted)
+{
+    ListList *ll = ll_create();
+    for (int i = 0; i < list->len / 16; i++)
+    {
+
+        __m128 r1, r2, r3, r4;
+        //CARGAR REGISTROS
+        r1 = _mm_load_ps(list->data + (i * 16) + 0);
+        r2 = _mm_load_ps(list->data + (i * 16) + 4);
+        r3 = _mm_load_ps(list->data + (i * 16) + 8);
+        r4 = _mm_load_ps(list->data + (i * 16) + 12);
+
+        sort_in_register(&r1, &r2, &r3, &r4);
+        bmn_network(&r1, &r2);
+        bmn_network(&r3, &r4);
+        merge_simd(&r1, &r2, &r3, &r4);
+
+        List *l1 = list_create();
+        list_load(l1, r1); // SE PUEDE OPTIMIZAR GUARDANDO DE A 4
+        list_load(l1, r2);
+        list_load(l1, r3);
+        list_load(l1, r4);
+        ll_append(ll, *l1);
+    }
+
+    ll_merge(ll, list_sorted);
+    ll_free(ll);
+}
+
+void swap_float(float *xp, float *yp)
+{
+    float temp = *xp;
+    *xp = *yp;
+    *yp = temp;
+}
+
+// A function to implement bubble sort
+void bubble_sort(float arr[], int n)
+{
+
+    for (int i = 0; i < n - 1; i++)
+        // Last i elements are already in place
+        for (int j = 0; j < n - i - 1; j++)
+            if (arr[j] > arr[j + 1])
+                swap_float(&arr[j], &arr[j + 1]);
 }
