@@ -15,8 +15,8 @@ int main(int argc, char *argv[])
     printf("%d\n", NValue);
     printf("%d\n", dValue);
 
-    //float *values = (float *)aligned_alloc(16, sizeof(float) * size); // Reservar memoria para arreglo de valores
-    float *values = (float *)malloc(sizeof(float) * NValue); // Reservar memoria para arreglo de valores
+    float *values = (float *)aligned_alloc(16, sizeof(float) * NValue); // Reservar memoria para arreglo de valores
+    //float *values = (float *)malloc(sizeof(float) * NValue); // Reservar memoria para arreglo de valores
 
     // LEER ARCHIVO
     read_file(iValue, values, NValue);
@@ -25,26 +25,17 @@ int main(int argc, char *argv[])
     {
 
         __m128 r1, r2, r3, r4;
-
         //CARGAR REGISTROS
         r1 = _mm_load_ps(values + (i * 16) + 0);
         r2 = _mm_load_ps(values + (i * 16) + 4);
         r3 = _mm_load_ps(values + (i * 16) + 8);
         r4 = _mm_load_ps(values + (i * 16) + 12);
-        //r1 = _mm_load_ps(A1);
-        //r2 = _mm_load_ps(A2);
-        //r3 = _mm_load_ps(A3);
-        //r4 = _mm_load_ps(A4);
 
         sort_in_register(&r1, &r2, &r3, &r4);
         bmn_network(&r1, &r2);
         bmn_network(&r3, &r4);
         merge_simd(&r1, &r2, &r3, &r4);
 
-        //float A1[4] __attribute__((aligned(16))) = {0.0, 0.0, 0.0, 0.0};
-        //float A2[4] __attribute__((aligned(16))) = {0.0, 0.0, 0.0, 0.0};
-        //float A3[4] __attribute__((aligned(16))) = {0.0, 0.0, 0.0, 0.0};
-        //float A4[4] __attribute__((aligned(16))) = {0.0, 0.0, 0.0, 0.0};
         float A[16] __attribute__((aligned(16)));
         //GUARDAR REGISTROS
         _mm_store_ps(A + 0, r1);
