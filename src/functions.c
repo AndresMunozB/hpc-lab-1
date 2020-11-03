@@ -146,6 +146,6 @@ void bubble_sort(float arr[], int n, int debug)
             counter++;
         }
         if (debug)
-            printf("STEP %lu/%lu \n", counter, steps);
+            printf("STEP #%lu OF %lu\n", counter, steps);
     }
 }
