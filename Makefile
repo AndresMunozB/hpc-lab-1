@@ -3,7 +3,7 @@ CFLAGS = -Wall -c
 
 compilation: obj/functions.o obj/utils.o obj/listlist.o obj/list.o obj/main.o
 	@ gcc obj/*.o -o bin/main.out
-	@ echo "Compilation success."
+	@ echo "Compilation success"
 
 obj/functions.o: src/functions.c
 	@ gcc $(CFLAGS) $(INC_DIRS) src/functions.c -o obj/functions.o
@@ -21,10 +21,10 @@ obj/main.o: src/main.c
 	@ gcc $(CFLAGS) $(INC_DIRS) src/main.c -o obj/main.o
 
 clean:
-	@ echo "Clean."
 	@ rm -rf obj/*
 	@ rm -rf bin/*
 	@ rm -rf output/*
+	@ echo "Clean success"
 
 run:
 	@ echo "Running...\n"

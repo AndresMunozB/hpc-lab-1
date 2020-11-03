@@ -11,6 +11,6 @@ void bmn_network(__m128 *r1, __m128 *r2);
 void merge_simd(__m128 *r1, __m128 *r2,__m128 *r3, __m128 *r4);
 void simd_sort(List *list, List *list_sorted);
 void swap_float(float *xp, float *yp);
-void bubble_sort(float arr[], int n);
+void bubble_sort(float arr[], int n, int debug);
 
 #endif
