@@ -64,10 +64,9 @@ void bmn_network(__m128 *r1, __m128 *r2)
 }
 
 void merge_simd(__m128 *r1, __m128 *r2,__m128 *r3, __m128 *r4){
-    bmn_network(r1,r3);
-
-    //MIN r2 = 9 / r4 = 5
-    if (_mm_comile_ss(*r2,*r4)){
+    bmn_network(r1,r3);    
+    
+    if (_mm_comile_ss(*r2,*r4)){ //Si r4[0]>r2[0]
         bmn_network(r3,r2);
         bmn_network(r2,r4);
         swap(r2,r3);
@@ -78,7 +77,6 @@ void merge_simd(__m128 *r1, __m128 *r2,__m128 *r3, __m128 *r4){
         swap(r3,r2);
         swap(r3,r4);
     }
-
 }
 
 void swap(__m128 *r1, __m128 *r2){
