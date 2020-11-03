@@ -32,12 +32,12 @@ clean:
 
 run:
 	@ echo "Running..."
-	@ ./bin/simdsort.out -i ./data/65536floats.raw -o output.raw -N 65536 -d 1
+	@ ./bin/simdsort.out -i ./data/65536floats.raw -o output_simd_sort.raw -N 65536 -d 1
 
 start: clean compilation run
 
 run_bubblesort:
 	@ echo "Running..."
-	@ ./bin/bubblesort.out -i ./data/65536floats.raw -o salida.out -N 65536 -d 1
-	
+	@ ./bin/bubblesort.out -i ./data/65536floats.raw -o output_bubble_sort.raw -N 65536 -d 1
+
 start_bubblesort: clean compilation run_bubblesort
