@@ -1,12 +1,18 @@
 INC_DIRS = -Iinclude
 CFLAGS = -Wall -c
 
-compilation: obj/functions.o obj/utils.o obj/main.o
+compilation: obj/functions.o obj/utils.o obj/listlist.o obj/list.o obj/main.o
 	@ gcc obj/*.o -o bin/main.out
 	@ echo "Compilation success."
 
 obj/functions.o: src/functions.c
 	@ gcc $(CFLAGS) $(INC_DIRS) src/functions.c -o obj/functions.o
+
+obj/listlist.o: src/listlist.c
+	@ gcc $(CFLAGS) $(INC_DIRS) src/listlist.c -o obj/listlist.o
+
+obj/list.o: src/list.c
+	@ gcc $(CFLAGS) $(INC_DIRS) src/list.c -o obj/list.o
 
 obj/utils.o: src/utils.c
 	@ gcc $(CFLAGS) $(INC_DIRS) src/utils.c -o obj/utils.o

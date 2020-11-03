@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "functions.h"
 #include "utils.h"
+#include "listlist.h"
+#include "list.h"
 
 int main(int argc, char *argv[])
 {
@@ -10,17 +12,13 @@ int main(int argc, char *argv[])
     char *iValue = NULL;
     char *oValue = NULL;
     get_opt(argc, argv, &iValue, &oValue, &NValue, &dValue);
-    printf("%s\n", iValue);
-    printf("%s\n", oValue);
-    printf("%d\n", NValue);
-    printf("%d\n", dValue);
 
     float *values = (float *)aligned_alloc(16, sizeof(float) * NValue); // Reservar memoria para arreglo de valores
-    //float *values = (float *)malloc(sizeof(float) * NValue); // Reservar memoria para arreglo de valores
 
     // LEER ARCHIVO
     read_file(iValue, values, NValue);
-
+    ListList *ll = ll_create();
+    List *l2 = list_create();
     for (int i = 0; i < NValue / 16; i++)
     {
 
@@ -36,17 +34,17 @@ int main(int argc, char *argv[])
         bmn_network(&r3, &r4);
         merge_simd(&r1, &r2, &r3, &r4);
 
-        float A[16] __attribute__((aligned(16)));
-        //GUARDAR REGISTROS
-        _mm_store_ps(A + 0, r1);
-        _mm_store_ps(A + 4, r2);
-        _mm_store_ps(A + 8, r3);
-        _mm_store_ps(A + 12, r4);
-
-        printf("Matriz\n");
-        print_float_array(A, 16);
-        printf("\n");
+        List *l1 = list_create();
+        list_load(l1,r1);
+        list_load(l1,r2);
+        list_load(l1,r3);
+        list_load(l1,r4);
+        ll_append(ll,*l1);
     }
+
+    ll_merge(ll,l2);
+    list_print(l2);
+    ll_free(ll);
 
     free(values);
     return 0;

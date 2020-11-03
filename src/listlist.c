@@ -1,4 +1,3 @@
-#include "list.h"
 #include "listlist.h"
 
 ListList *ll_create()
@@ -17,12 +16,16 @@ void ll_print(ListList *listlist)
     printf("\n");
 }
 
-void ll_free(ListList *listlist){
-    if(listlist->len == 0){
+void ll_free(ListList *listlist)
+{
+    if (listlist->len == 0)
+    {
         free(listlist);
     }
-    else{
-        for (int i=0;i<listlist->len;i++){
+    else
+    {
+        for (int i = 0; i < listlist->len; i++)
+        {
             list_free(&listlist->data[i]);
         }
         free(listlist->data);
@@ -48,7 +51,7 @@ void ll_delete(ListList *listlist, int index)
 {
     if (index < 0 || index > listlist->len)
     {
-        printf("Invalid position! Please enter position between 1 to %d", listlist->len);
+        printf("Posicion invalida! Por favor ingresar una posicion entre 1 y %d", listlist->len);
     }
     else
     {
@@ -75,12 +78,12 @@ float ll_pop_min(ListList *listlist)
         }
     }
     min = list_pop(&listlist->data[index]);
-    if(listlist->data[index].len == 0){
-        ll_delete(listlist,index);
+    if (listlist->data[index].len == 0)
+    {
+        ll_delete(listlist, index);
     }
     return min;
 }
-
 
 int ll_is_empty(ListList *listlist)
 {
@@ -100,12 +103,13 @@ int ll_is_empty(ListList *listlist)
 
 void ll_merge(ListList *listlist, List *list)
 {
-    while(!ll_is_empty(listlist)){
-        list_append(list,ll_pop_min(listlist));
+    while (!ll_is_empty(listlist))
+    {
+        list_append(list, ll_pop_min(listlist));
     }
 }
 
-int main()
+/*int main()
 {
     ListList *ll = ll_create();
     List *l1 = list_create();
@@ -127,4 +131,4 @@ int main()
     list_print(l3);
     ll_free(ll);
     return 0;
-}
+}*/

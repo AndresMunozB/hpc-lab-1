@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "list.h"
 
 typedef struct ListList
 {
@@ -17,5 +18,6 @@ void ll_delete(ListList *listlist, int index);
 float ll_pop_min(ListList *listlist);
 int ll_is_empty(ListList *listlist);
 void ll_merge(ListList *listlist, List *list);
+void ll_free(ListList *listlist);
 
 #endif
