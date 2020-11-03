@@ -5,7 +5,7 @@
 int main(int argc, char *argv[])
 {
     // PARAMETROS DE ENTRADA
-    int NValue = 0;
+    unsigned long NValue = 0;
     int dValue = 0;
     char *iValue = NULL;
     char *oValue = NULL;

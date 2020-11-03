@@ -1,4 +1,6 @@
+#include <time.h>
 #include "utils.h"
+#include "list.h"
 
 /**
  * read_file: Lectura de un archivo
@@ -8,17 +10,30 @@
  *      - size: Cantidad de elementos dentro del archivo
  * Salida: arreglo de float con valores del archivo.
 */
-void read_file(char *file_name, float *array, int size)
+void read_file(char *file_name, float *array, unsigned long size)
 {
     FILE *input_file = fopen(file_name, "rb"); // Abrir archivo
     fread(array, sizeof(float), size, input_file);
     fclose(input_file); //Cerrar archivo
 }
-void write_file(char *file_name, float *array, int size)
+void write_file(char *file_name, float *array, unsigned long size)
 {
     FILE *output_file = fopen(file_name, "wb"); // Abrir archivo
     fwrite(array, sizeof(float), size, output_file);
     fclose(output_file); //Cerrar archivo
+}
+
+void create_file(char *file_name, unsigned long size)
+{
+    List *list = list_create();
+    float float_random;
+    srand((unsigned)time(NULL));
+    for (unsigned long i = 0; i < size; i++)
+    {
+        float_random = (float)rand() / RAND_MAX;
+        list_append(list, float_random);
+    }
+    write_file(file_name, list->data, list->len);
 }
 
 /**
@@ -48,7 +63,7 @@ void print_matrix_16(float *arg1, float *arg2, float *arg3, float *arg4)
 // Descripción: Función que recibe los parámetros de entrada mediante el uso de getopt
 // Entradas: argumentos ingresados por consola
 // Salida: 0 en caso de éxito, 1 en caso de error.
-void get_opt(int argc, char *argv[], char **i, char **o, int *n, int *d)
+void get_opt(int argc, char *argv[], char **i, char **o, unsigned long *n, int *d)
 {
     int c;
 
@@ -63,7 +78,7 @@ void get_opt(int argc, char *argv[], char **i, char **o, int *n, int *d)
             *o = optarg;
             break;
         case 'N':
-            sscanf(optarg, "%i", n);
+            sscanf(optarg, "%lu", n);
             break;
         case 'd':
             sscanf(optarg, "%i", d);

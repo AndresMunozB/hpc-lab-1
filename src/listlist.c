@@ -9,7 +9,7 @@ ListList *ll_create()
 
 void ll_print(ListList *listlist)
 {
-    for (int i = 0; i < listlist->len; i++)
+    for (unsigned long i = 0; i < listlist->len; i++)
     {
         list_print(&listlist->data[i]);
     }
@@ -24,7 +24,7 @@ void ll_free(ListList *listlist)
     }
     else
     {
-        for (int i = 0; i < listlist->len; i++)
+        for (unsigned long i = 0; i < listlist->len; i++)
         {
             list_free(&listlist->data[i]);
         }
@@ -47,16 +47,16 @@ void ll_append(ListList *listlist, List new_element)
     }
     listlist->len++;
 }
-void ll_delete(ListList *listlist, int index)
+void ll_delete(ListList *listlist, unsigned long index)
 {
     if (index < 0 || index > listlist->len)
     {
-        printf("Posicion invalida! Por favor ingresar una posicion entre 1 y %d", listlist->len);
+        printf("Posicion invalida! Por favor ingresar una posicion entre 1 y %lu", listlist->len);
     }
     else
     {
         list_free(&listlist->data[index]);
-        for (int i = index; i < listlist->len - 1; i++)
+        for (unsigned long i = index; i < listlist->len - 1; i++)
         {
             listlist->data[i] = listlist->data[i + 1];
         }
@@ -68,8 +68,8 @@ void ll_delete(ListList *listlist, int index)
 float ll_pop_min(ListList *listlist)
 {
     float min = listlist->data[0].data[0];
-    int index = 0;
-    for (int i = 1; i < listlist->len; i++)
+    unsigned long index = 0;
+    for (unsigned long i = 1; i < listlist->len; i++)
     {
         if (min > listlist->data[i].data[0])
         {
@@ -91,7 +91,7 @@ int ll_is_empty(ListList *listlist)
     {
         return 1;
     }
-    for (int i = 0; i < listlist->len; i++)
+    for (unsigned long i = 0; i < listlist->len; i++)
     {
         if (listlist->data[i].len != 0)
         {

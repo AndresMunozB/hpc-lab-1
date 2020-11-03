@@ -5,7 +5,7 @@
 int main(int argc, char *argv[])
 {
     // PARAMETROS DE ENTRADA
-    int NValue = 0;
+    unsigned long NValue = 0;
     int dValue = 0;
     char *iValue = NULL;
     char *oValue = NULL;
@@ -24,7 +24,9 @@ int main(int argc, char *argv[])
     t = clock() - t;
     time_taken = ((double)t) / CLOCKS_PER_SEC; // in seconds
     printf("simd_sort() took %f seconds to execute \n", time_taken);
+    //list_print(list_sorted);
     write_file(oValue, list_sorted->data, list_sorted->len); //ESCRIBIR LOS DATOS ORDENADOS
+    //create_file("nuevo.raw", 16000000);
 
     // LIBERAR MEMORIA
     list_free(list);

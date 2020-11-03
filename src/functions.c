@@ -92,10 +92,9 @@ void merge_simd(__m128 *r1, __m128 *r2, __m128 *r3, __m128 *r4)
 void simd_sort(List *list, List *list_sorted, int debug)
 {
     unsigned long counter = 0l;
-    unsigned long nlong = (unsigned long) list->len;
-    unsigned long steps = nlong / 16;
+    unsigned long steps = list->len / 16;
     ListList *ll = ll_create();
-    for (int i = 0; i < list->len / 16; i++)
+    for (unsigned long i = 0; i < list->len / 16; i++)
     {
         __m128 r1, r2, r3, r4;
         //CARGAR REGISTROS
@@ -116,7 +115,7 @@ void simd_sort(List *list, List *list_sorted, int debug)
         list_load(l1, r4);
         ll_append(ll, *l1);
         if(debug)
-            printf("SORTING BLOCK #%lu OF %lu BLOCKS\n", counter, steps);
+            printf("SORTING BLOCK #%lu OF %lu BLOCKS\n", counter+1, steps);
         counter ++;
     }
     if(debug)

@@ -7,12 +7,12 @@
 
 typedef struct List
 {
-    int len;
+    unsigned long len;
     float *data;
 } List;
 
 List *list_create();
-List *list_init(int elements);
+List *list_init(unsigned long elements);
 void list_print(List *list);
 void list_free(List *list);
 void list_append(List *list, float new_element);

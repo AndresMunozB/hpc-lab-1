@@ -7,7 +7,7 @@ List *list_create()
     return list;
 }
 
-List *list_init(int elements)
+List *list_init(unsigned long elements)
 {
     List *list = (List *)malloc(sizeof(List));
     list->data = (float *)aligned_alloc(16, sizeof(float) * elements);
@@ -17,7 +17,7 @@ List *list_init(int elements)
 
 void list_print(List *list)
 {
-    for (int i = 0; i < list->len; i++)
+    for (unsigned long i = 0; i < list->len; i++)
     {
         printf("%f ", list->data[i]);
     }
@@ -49,7 +49,7 @@ float list_pop(List *list)
 {
     float value = list->data[0];
     float *new_data = (float *)malloc(sizeof(float) * (list->len - 1));
-    for (int i = 1; i < list->len; i++)
+    for (unsigned long i = 1; i < list->len; i++)
     {
         new_data[i - 1] = list->data[i];
     }
