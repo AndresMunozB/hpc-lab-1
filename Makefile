@@ -1,9 +1,11 @@
 INC_DIRS = -Iinclude
 CFLAGS = -Wall -c
 
-compilation: obj/functions.o obj/utils.o obj/listlist.o obj/list.o obj/simdsort.o obj/bubblesort.o 
+compilation: obj/functions.o obj/utils.o obj/listlist.o obj/list.o obj/simdsort.o obj/bubblesort.o obj/testsimdsort.o obj/testbubblesort.o
 	@ gcc obj/functions.o obj/utils.o obj/listlist.o obj/list.o obj/simdsort.o -o bin/simdsort.out
 	@ gcc obj/functions.o obj/utils.o obj/listlist.o obj/list.o obj/bubblesort.o -o bin/bubblesort.out
+	@ gcc obj/functions.o obj/utils.o obj/listlist.o obj/list.o obj/testsimdsort.o -o bin/testsimdsort.out
+	@ gcc obj/functions.o obj/utils.o obj/listlist.o obj/list.o obj/testbubblesort.o -o bin/testbubblesort.out
 	@ echo "Compilation success"
 
 obj/functions.o: src/functions.c
@@ -21,8 +23,14 @@ obj/utils.o: src/utils.c
 obj/simdsort.o: src/simdsort.c
 	@ gcc $(CFLAGS) $(INC_DIRS) src/simdsort.c -o obj/simdsort.o
 
+obj/testsimdsort.o: src/testsimdsort.c
+	@ gcc $(CFLAGS) $(INC_DIRS) src/testsimdsort.c -o obj/testsimdsort.o
+
 obj/bubblesort.o: src/bubblesort.c
 	@ gcc $(CFLAGS) $(INC_DIRS) src/bubblesort.c -o obj/bubblesort.o
+
+obj/testbubblesort.o: src/testbubblesort.c
+	@ gcc $(CFLAGS) $(INC_DIRS) src/testbubblesort.c -o obj/testbubblesort.o
 
 clean:
 	@ rm -rf obj/*

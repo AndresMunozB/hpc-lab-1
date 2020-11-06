@@ -23,7 +23,8 @@ int main(int argc, char *argv[])
     simd_sort(list, list_sorted, dValue); //ORDENAR LOS VALORES
     t = clock() - t;
     time_taken = ((double)t) / CLOCKS_PER_SEC; // in seconds
-    printf("simd_sort() took %f seconds to execute \n", time_taken);
+    if(dValue)
+        printf("simd_sort() took %f seconds to execute \n", time_taken);
     //list_print(list_sorted);
     write_file(oValue, list_sorted->data, list_sorted->len); //ESCRIBIR LOS DATOS ORDENADOS
     //create_file("nuevo.raw", 16000000);
