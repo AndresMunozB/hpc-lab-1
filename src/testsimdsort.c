@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     char *oValue = NULL;
     get_opt(argc, argv, &iValue, &oValue, &NValue, &dValue);
 
-    for (int i = 0; i < 15; i++)
+    for (int i = 0; i < 20; i++)
     {
         // VARIABLES A UTILIZAR
         List *list = list_init(NValue);

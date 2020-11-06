@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     clock_t t;
     double time_taken;
     //create_file("1600floats.raw",1600);
-    for (int i = 0; i < 15; i++)
+    for (int i = 0; i < 20; i++)
     {
         read_file(iValue, list->data, list->len); // LEER ARCHIVO
         t = clock();
