@@ -47,5 +47,18 @@ start: clean compilation run
 run_bubblesort:
 	@ echo "Running..."
 	@ ./bin/bubblesort.out -i ./data/65536floats.raw -o output_bubble_sort.raw -N 65536 -d 1
-
+run_test_simdsort:
+	@ echo "Running test 1600..."
+	@ ./bin/testsimdsort.out -i ./data/1600floats.raw -o output.raw -N 1600 -d 0
+	@ echo "Running test 16000..."
+	@ ./bin/testsimdsort.out -i ./data/16000floats.raw -o output.raw -N 16000 -d 0
+	@ echo "Running test 160000..."
+	@ ./bin/testsimdsort.out -i ./data/160000floats.raw -o output.raw -N 160000 -d 0
+run_test_bubblesort:
+	@ echo "Running test 1600..."
+	@ ./bin/testbubblesort.out -i ./data/1600floats.raw -o output.raw -N 1600 -d 0
+	@ echo "Running test 16000..."
+	@ ./bin/testbubblesort.out -i ./data/16000floats.raw -o output.raw -N 16000 -d 0
+	@ echo "Running test 160000..."
+	@ ./bin/testbubblesort.out -i ./data/160000floats.raw -o output.raw -N 160000 -d 0
 start_bubblesort: clean compilation run_bubblesort

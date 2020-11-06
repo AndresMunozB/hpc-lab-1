@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     List *list = list_init(NValue);
     clock_t t;
     double time_taken;
-    //create_file("hola.raw",160000);
+    //create_file("1600floats.raw",1600);
     for (int i = 0; i < 15; i++)
     {
         read_file(iValue, list->data, list->len); // LEER ARCHIVO
