@@ -1,5 +1,6 @@
 #include "listlist.h"
 
+// Funcion que crea una lista de lista
 ListList *ll_create()
 {
     ListList *ll = (ListList *)malloc(sizeof(ListList));
@@ -7,6 +8,7 @@ ListList *ll_create()
     return ll;
 }
 
+// Funcion que muestra la lista de lista
 void ll_print(ListList *listlist)
 {
     for (unsigned long i = 0; i < listlist->len; i++)
@@ -16,6 +18,7 @@ void ll_print(ListList *listlist)
     printf("\n");
 }
 
+// Funcion que libera la memoria de una lista de lista
 void ll_free(ListList *listlist)
 {
     if (listlist->len == 0)
@@ -33,6 +36,7 @@ void ll_free(ListList *listlist)
     }
 }
 
+// Funcion que agrega una nueva lista a la lista de listas
 void ll_append(ListList *listlist, List new_element)
 {
     if (listlist->len == 0)
@@ -47,6 +51,8 @@ void ll_append(ListList *listlist, List new_element)
     }
     listlist->len++;
 }
+
+// Funcion que elimina una lista de la lista de lista
 void ll_delete(ListList *listlist, unsigned long index)
 {
     if (index < 0 || index > listlist->len)
@@ -65,6 +71,8 @@ void ll_delete(ListList *listlist, unsigned long index)
         listlist->len--;
     }
 }
+
+// Funcion que elimina un elemento de la lista de lista
 float ll_pop_min(ListList *listlist)
 {
     float min = listlist->data[0].data[0];
@@ -85,6 +93,7 @@ float ll_pop_min(ListList *listlist)
     return min;
 }
 
+// Funcino que verifica si la lista de lista esta vacia
 int ll_is_empty(ListList *listlist)
 {
     if (listlist->len == 0)
@@ -101,6 +110,7 @@ int ll_is_empty(ListList *listlist)
     return 1;
 }
 
+// Funcion que se encarga de ir verificando cada lista para seguir haciendo el merge entre ellas
 void ll_merge(ListList *listlist, List *list)
 {
     while (!ll_is_empty(listlist))
