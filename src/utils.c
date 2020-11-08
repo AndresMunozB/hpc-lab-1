@@ -62,10 +62,20 @@ void print_matrix_16(float *arg1, float *arg2, float *arg3, float *arg4)
 
 // Descripción: Función que recibe los parámetros de entrada mediante el uso de getopt
 // Entradas: argumentos ingresados por consola
-// Salida: 0 en caso de éxito, 1 en caso de error.
-void get_opt(int argc, char *argv[], char **i, char **o, unsigned long *n, int *d)
+// Salida: 1 en caso de éxito, 0 en caso de error.
+int get_opt(int argc, char *argv[], char **i, char **o, unsigned long *n, int *d)
 {
     int c;
+
+    opterr = 0;
+    if (argc < 9){
+        printf("The number of parameters less than requested\n");
+        return 0;
+    }
+    else if (argc > 9){
+        printf("The number of parameters greater than the requested\n");
+        return 0;
+    }
 
     while ((c = getopt(argc, argv, "i:o:N:d:")) != -1)
     {
@@ -97,12 +107,5 @@ void get_opt(int argc, char *argv[], char **i, char **o, unsigned long *n, int *
             abort();
         }
     }
-
-    /*if(argc < 8){//si se ingresa un numero de argumentos menor a 3, se finaliza la ejecucion del programa
-		//Debe ser 3, porque el nombre del programa se considera como un argumento, siendo -h y el valor que acompañe a -h los dos argumentos faltantes. No se considera -m (que seria el cuarto argumento) porque es un flag que puede ser especificado por el usuario o no
-		printf("Se ingreso un numero incorrecto de argumentos\n");
-		fprintf(stderr, "Uso correcto: %s [-i nombreImagen] [-s nombreSalidaSecuencial] [-s nombreSalidaParalelo] [-n numeroEntero] [-d]\n",
-				   argv[0]);
-		   exit(EXIT_FAILURE);
-		}*/
+    return 1;
 }

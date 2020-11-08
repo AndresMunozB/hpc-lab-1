@@ -9,7 +9,8 @@ int main(int argc, char *argv[])
     int dValue = 0;
     char *iValue = NULL;
     char *oValue = NULL;
-    get_opt(argc, argv, &iValue, &oValue, &NValue, &dValue);
+    if (get_opt(argc, argv, &iValue, &oValue, &NValue, &dValue) == 0)
+        return 0;
 
     // VARIABLES A UTILIZAR
     List *list = list_init(NValue);
