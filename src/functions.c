@@ -8,6 +8,7 @@ void swap(__m128 *r1, __m128 *r2)
     *r2 = _mm_shuffle_ps(t1, t1, _MM_SHUFFLE(3, 2, 1, 0));
 }
 
+//GENERA 4 BLOQUES DE 4 NUMEROS ORDENADOS DE MENOR A MAYOR
 void sort_in_register(__m128 *r1, __m128 *r2, __m128 *r3, __m128 *r4)
 {
     //REGISTROS TEMPORALES
@@ -33,6 +34,7 @@ void sort_in_register(__m128 *r1, __m128 *r2, __m128 *r3, __m128 *r4)
     _MM_TRANSPOSE4_PS(*r1, *r2, *r3, *r4);
 }
 
+// GENERA UN BLOQUE DE 8 NUMEROS ORDENADO DE MENOR A MAYOR
 void bmn_network(__m128 *r1, __m128 *r2)
 {
     __m128 t1, t2;
@@ -70,6 +72,7 @@ void bmn_network(__m128 *r1, __m128 *r2)
     *r2 = _mm_shuffle_ps(*r2, *r2, _MM_SHUFFLE(0, 2, 1, 3)); // INVERTIR EXTREMOS
 }
 
+//GENERA UN BLOQUE DE 16 NUMEROS ORDENADOS DE MENOR A MAYOR  
 void merge_simd(__m128 *r1, __m128 *r2, __m128 *r3, __m128 *r4)
 {
     bmn_network(r1, r3);
@@ -88,7 +91,7 @@ void merge_simd(__m128 *r1, __m128 *r2, __m128 *r3, __m128 *r4)
         swap(r3, r4);
     }
 }
-
+//GENERA UNA LISTA ORDENADA DE NUMEROS
 void simd_sort(List *list, List *list_sorted, int debug)
 {
     unsigned long counter = 0l;
@@ -103,10 +106,10 @@ void simd_sort(List *list, List *list_sorted, int debug)
         r3 = _mm_load_ps(list->data + (i * 16) + 8);
         r4 = _mm_load_ps(list->data + (i * 16) + 12);
 
-        sort_in_register(&r1, &r2, &r3, &r4);
-        bmn_network(&r1, &r2);
-        bmn_network(&r3, &r4);
-        merge_simd(&r1, &r2, &r3, &r4);
+        sort_in_register(&r1, &r2, &r3, &r4); // 4 NUMEROS EN CADA REGISTRO ORDENADO DE MENOS A MAYOR
+        bmn_network(&r1, &r2); // 8 NUMEROS ORDENADOS DE MENOS A MAYOR EN DOS REGISTROS
+        bmn_network(&r3, &r4); // 8 NUMEROS ORDENADOS DE MENOS A MAYOR EN DOS REGISTROS
+        merge_simd(&r1, &r2, &r3, &r4); // 16 NUERMOS ORDENADOS DE MENOR A MAYOR EN 4 REGISTROS
 
         List *l1 = list_create();
         list_load(l1, r1); // SE PUEDE OPTIMIZAR GUARDANDO DE A 4
