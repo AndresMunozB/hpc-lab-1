@@ -40,7 +40,7 @@ clean:
 
 run:
 	@ echo "Running..."
-	@ ./bin/simdsort.out -i ./data/65536floats.raw -o output_simd_sort.raw -N 65536 -d 1
+	@ ./bin/simdsort.out -i ./data/2097152floats.raw -o output_simd_sort.raw -N 2097152 -d 1
 
 start: clean compilation run
 
